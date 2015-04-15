@@ -1,7 +1,7 @@
 {
-  "name": "sails-oracle",
+  "name": "waterline-oracle-adapter",
   "version": "0.0.1",
-  "description": "Oracle adapter for Sails.js",
+  "description": "Oracle adapter for Node Generator",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Adapter should be tested using Sails.js core.\" && exit 1"
@@ -19,12 +19,11 @@
     "sails.js"
   ],
   "author": {
-    "name": "Maycon Heerdt"
+    "name": "Juan Carlos Cancela"
   },
-  "license": "MIT",
+  "license": "TBD",
   "readmeFilename": "README.md",
   "dependencies": {
-    "node": ">=0.3.4",
     "oracle": ">=0.3.4",
     "async": ">=0.1.22",
     "underscore": "1.4.3",
