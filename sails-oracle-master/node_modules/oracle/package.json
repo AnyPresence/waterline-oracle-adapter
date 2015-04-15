@@ -1,0 +1,45 @@
+{
+  "name": "oracle",
+  "description": "Oracle database driver",
+  "keywords": [
+    "database",
+    "db",
+    "oracle"
+  ],
+  "homepage": "https://github.com/nearinfinity/node-oracle",
+  "version": "0.3.4",
+  "engines": {
+    "node": ">=0.6.0"
+  },
+  "maintainers": [
+    {
+      "name": "Joe Ferner",
+      "email": "joe@fernsroth.com"
+    },
+    {
+      "name": "Raymond Feng",
+      "email": "raymond@strongloop.com"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/nearinfinity/node-oracle/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nearinfinity/node-oracle.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "nodeunit": "~>0.8.0"
+  },
+  "scripts": {
+    "test": "nodeunit test/integration.js test/outparams.js",
+    "install": "node-gyp rebuild"
+  },
+  "main": "./index.js",
+  "gypfile": true,
+  "readme": "# Install\n\nYou need to download and install [Oracle instant client](http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html) from following links:\n\nhttp://www.oracle.com/technetwork/database/features/instant-client/index-097480.html\n\n1. Instant Client Package - Basic or Basic Lite: All files required to run OCI, OCCI, and JDBC-OCI applications\n2. Instant Client Package - SDK: Additional header files and an example makefile for developing Oracle applications with Instant Client\n\nFor Windows, please make sure 12_1 version is used.\n\n**Please make sure you download the correct packages for your system architecture, such as 64 bit vs 32 bit**\n**Unzip the files 1 and 2 into the same directory, such as /opt/instantclient\\_11\\_2 or c:\\instantclient\\_12\\_1**\n\nOn MacOS or Linux:\n\n1. Set up the following environment variables\n\nMacOS/Linux:\n\n```bash\nexport OCI_HOME=<directory of Oracle instant client>\nexport OCI_LIB_DIR=$OCI_HOME\nexport OCI_INCLUDE_DIR=$OCI_HOME/sdk/include\nexport OCI_VERSION=<the instant client major version number> # Optional. Default is 11.\n```\n\n2. Create the following symbolic links\n\nMacOS:\n\n```\ncd $OCI_LIB_DIR\nln -s libclntsh.dylib.11.1 libclntsh.dylib\nln -s libocci.dylib.11.1 libocci.dylib\n```\n\nLinux:\n\n```\ncd $OCI_LIB_DIR\nln -s libclntsh.so.11.1 libclntsh.so\nln -s libocci.so.11.1 libocci.so\n```\n\n`libaio` library is required on Linux systems:\n\n* On Unbuntu/Debian\n\n```\nsudo apt-get install libaio1\n```\n\n* On Fedora/CentOS/RHEL\n\n```\nsudo yum install libaio\n```\n\n3. Configure the dynamic library path\n\nMacOS:\n\n```\nexport DYLD_LIBRARY_PATH=$OCI_LIB_DIR\n```\n\nLinux:\n\nAdd the shared object files to the ld cache:\n\n```\n# Replace /opt/instantclient_11_2/ with wherever you extracted the Basic Lite files to\necho '/opt/instantclient_11_2/' | sudo tee -a /etc/ld.so.conf.d/oracle_instant_client.conf\nsudo ldconfig\n```\n\nOn Windows, you need to set the environment variables:\n\nIf you have VisualStudio 2012 installed,\n\n```bat\nOCI_INCLUDE_DIR=C:\\instantclient_12_1\\sdk\\include\nOCI_LIB_DIR=C:\\instantclient_12_1\\sdk\\lib\\msvc\\vc11\nOCI_VERSION=<the instant client major version number> # Optional. Default is 11.\nPath=...;c:\\instantclient_12_1\\vc11;c:\\instantclient_12_1\n```\n\n**Please make sure c:\\instantclient_12_1\\vc11 comes before c:\\instantclient_12_1**\n\nIf you have VisualStudio 2010 installed,\n\n```bat\nOCI_INCLUDE_DIR=C:\\instantclient_12_1\\sdk\\include\nOCI_LIB_DIR=C:\\instantclient_12_1\\sdk\\lib\\msvc\\vc10\nOCI_VERSION=<the instant client major version number> # Optional. Default is 11.\nPath=...;c:\\instantclient_12_1\\vc10;c:\\instantclient_12_1\n```\n\n**Please make sure c:\\instantclient_12_1\\vc10 comes before c:\\instantclient_12_1**\n\n\n# Examples\n\nThe simplest way to connect to the database uses the following code:\n\n```javascript\nvar oracle = require(\"oracle\");\n\nvar connectData = { \"hostname\": \"localhost\", \"user\": \"test\", \"password\": \"test\", \"database\": \"ORCL\" };\n\noracle.connect(connectData, function(err, connection) {\n    ...\n    connection.close(); // call this when you are done with the connection\n  });\n});\n```\nThe `database` parameter contains the \"service name\" or \"SID\" of the database. If you have an Oracle RAC or some other kind of setup, or if you prefer to use \"TNS\", you can do so as well. You can either provide a complete connection string, like:\n\n```javascript\nvar connString = \n      \"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=orcl)))\";\n```\n\nor just the shortcut as declared in your `tnsnames.ora`:\n\n    DEV =\n      (DESCRIPTION =\n        (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))\n        (CONNECT_DATA =\n          (SERVER = DEDICATED)\n          (SERVICE_NAME = orcl)\n        )\n      )\n\nThe connection parameter would then be:\n\n```javascript\nvar connectData = { \"tns\": \"DEV\", \"user\": \"test\", \"password\": \"test\" };\n// or: var connectData = { \"tns\": connString, \"user\": \"test\", \"password\": \"test\" };\n```\n\nTo access a table you could then use:\n\n```javascript\noracle.connect(connData, function(err, connection) {\n\nor just the shortcut as declared in your `tnsnames.ora`:\n\n  // selecting rows\n  connection.execute(\"SELECT * FROM person\", [], function(err, results) {\n    if ( err ) {\n      console.log(err);\n    } else {\n      console.log(results);\n\n      // inserting with return value\n      connection.execute(\n        \"INSERT INTO person (name) VALUES (:1) RETURNING id INTO :2\",\n        ['joe ferner', new oracle.OutParam()],\n        function(err, results) {\n          if ( err ) { console.log(err) } else {\n            console.log(results);\n          }\n          // results.updateCount = 1\n          // results.returnParam = the id of the person just inserted\n          connection.close(); // call this when you are done with the connection\n        }\n      );\n    }\n  \n  });\n});\n```\n\nTo validate whether the connection is still established after some time:\n\n```javascript\nif (! connection.isConnected()) {\n  // retire this connection from a pool\n}\n```\n\n\n## Out Params\n\nThe following Out Params are supported in Stored Procedures:\n\n```\n\nOCCIINT\nOCCISTRING\nOCCIDOUBLE\nOCCIFLOAT\nOCCICURSOR\nOCCICLOB\nOCCIDATE\nOCCITIMESTAMP\nOCCINUMBER\nOCCIBLOB\n\n```\n\nAnd can be used as follows:\n\n```\n\nconnection.execute(\"call myProc(:1,:2)\", [\"nodejs\", new oracle.OutParam(oracle.OCCISTRING)], function(err, results){\n  console.dir(results);\n};\n\n```\n\nWhen using Strings as Out Params, the size can be optionally specified as follows:\n\n```\n\nconnection.execute(\"call myProc(:1,:2)\", [\"nodejs\", new oracle.OutParam(oracle.OCCISTRING, {size: 1000})], function(err, results){\n\n```\n\nIf no size is specified, a default size of 200 chars is used.\n\nSee tests for more examples.\n\n## In/Out Params\n\nThe following INOUT param types are supported:\n\n```\n\nOCCIINT\nOCCISTRING\nOCCIDOUBLE\nOCCIFLOAT\nOCCINUMBER\n\n```\n\nINOUT params are used like normal OUT prams, with the optional 'in' paramater value being passed in the options object:\n\n```\n\nconnection.execute(\"call myProc(:1)\", [new oracle.OutParam(oracle.OCCIINT, {in: 42})], function(err, results){\n  console.dir(results);\n};\n\n```\n\n\n# Develop\n\n## Install Oracle/Oracle Express\n\n * Download [Oracle Express 10g](http://www.oracle.com/technetwork/database/express-edition/database10gxe-459378.html)\n * Download [Instant Client](http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html)\n  * Instant Client Package - Basic Lite\n  * Instant Client Package - SQL*Plus\n  * Instant Client Package - SDK\n * Install Oracle Express (Ubuntu)\n\n```bash\nsudo dpkg -i oracle-xe_11.2.0.3.0-1.0_i386.deb\nsudo apt-get install alien\nsudo alien oracle-instantclient11.2-*\nsudo dpkg -i oracle-instantclient11.2-*.deb\nsudo /etc/init.d/oracle-xe configure\n```\n\n * Open http://localhost:9999/apex/ change 9999 to the port you configured. Log-in with \"sys\" and the password.\n * Create a user called \"test\" with password \"test\" and give all accesses.\n\n```bash\nsudo vi /etc/ld.so.conf.d/oracle.conf -- add this line /usr/lib/oracle/11.2/client/lib/\nsudo ldconfig\n\nexport ORACLE_SID=test\nexport ORACLE_HOME=/usr/lib/oracle/xe/app/oracle/product/11.2/server\nexport OCI_INCLUDE_DIR=/usr/include/oracle/11.2/client/\nexport OCI_LIB_DIR=/usr/lib/oracle/11.2/client/lib/\nsqlplus test@XE\n```\n\n## Build\n\n```bash\nnpm install\nnpm test\n```\n",
+  "readmeFilename": "README.md",
+  "_id": "oracle@0.3.4",
+  "_from": "oracle@"
+}

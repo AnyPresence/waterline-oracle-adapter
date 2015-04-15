@@ -1,0 +1,40 @@
+{
+  "name": "sails-oracle",
+  "version": "0.0.1",
+  "description": "Oracle adapter for Sails.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Adapter should be tested using Sails.js core.\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mayconheerdt/sails-oracle.git"
+  },
+  "keywords": [
+    "orm",
+    "waterline",
+    "oracle",
+    "sails",
+    "sailsjs",
+    "sails.js"
+  ],
+  "author": {
+    "name": "Maycon Heerdt"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "node": ">=0.3.4",
+    "oracle": ">=0.3.4",
+    "async": ">=0.1.22",
+    "underscore": "1.4.3",
+    "underscore.string": "2.3.1"
+  },
+  "readme": "![image_squidhome@2x.png](http://i.imgur.com/RIvu9.png) \n\n# Oracle Adapter for Sails Application.\n",
+  "bugs": {
+    "url": "https://github.com/mayconheerdt/sails-oracle/issues"
+  },
+  "_id": "sails-oracle@0.0.1",
+  "_from": "sails-oracle@",
+  "_resolved": "https://registry.npmjs.org/sails-oracle/-/sails-oracle-0.0.1.tgz"
+}
