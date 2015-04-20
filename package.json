@@ -1,26 +1,38 @@
 {
-  "name": "waterline-oracle-adapter",
-  "version": "0.0.1",
-  "description": "Oracle adapter for Node Generator",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/AnyPresence/waterline-oracle-adapter.git"
+  "name": "waterline-oracle",
+  "version": "0.10.0",
+  "description": "Oracle DB adapter for Sails / Waterline AnyPresence",
+  "main": "adapter.js",
+  "scripts": {
+    "test": "node test/integration/runner -R spec -b"
   },
-  "keywords": [ "orm", "waterline", "oracle", "sails", "sailsjs", "sails.js", "anypresence"],
-  "author": { "name": "Juan Carlos Cancela"},
-  "bugs": { "url": "https://github.com/AnyPresence/waterline-oracle-adapter/issues" },
-  "license": "AnyPresence License",
+  "repository": {"type":"git","url":"git://github.com/AnyPresence/waterline-oracle-adapter"},
+  "keywords": [
+    "oracle",
+    "adapter",
+    "sails",
+    "waterline",
+    "sails.js",
+    "plugin",
+    "anypresence"
+  ],
+  "author": "juancarloscancela",
+  "license": "AP License",
   "readmeFilename": "README.md",
   "dependencies": {
-    "strong-oracle": "git://github.com/juancarloscancela/strong-oracle",
-    "async": "0.1.22",
-    "underscore": "1.4.3",
-    "underscore.string": "2.3.1"
+    "strong-oracle":"git://github.com/juancarloscancela/strong-oracle"
+  },
+  "devDependencies": {
+    "waterline-adapter-tests": "~0.10.0",
+    "mocha": "*",
+    "captains-log": "~0.11.0"
   },
   "waterlineAdapter": {
-    "type": "waterline-oracle",
-    "interfaces": ["sql"],
+    "type": "oracle",
+    "interfaces": [
+      "semantic",
+      "queryable"
+    ],
     "waterlineVersion": "~0.10.0"
   }
 }
