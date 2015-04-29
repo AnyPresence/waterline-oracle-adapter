@@ -20,7 +20,8 @@
   "license": "AP License",
   "readmeFilename": "README.md",
   "dependencies": {
-    "strong-oracle":"git://github.com/juancarloscancela/strong-oracle"
+    "strong-oracle": "git://github.com/juancarloscancela/strong-oracle",
+    "squel":"3.10.0"
   },
   "devDependencies": {
     "waterline-adapter-tests": "~0.10.0",
