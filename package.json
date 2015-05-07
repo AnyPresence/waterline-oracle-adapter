@@ -26,7 +26,10 @@
   "devDependencies": {
     "waterline-adapter-tests": "~0.10.0",
     "mocha": "*",
-    "captains-log": "~0.11.0"
+    "captains-log": "0.11.0",
+    "async": "0.9.0",
+    "es6-promise": "2.0.1",
+    "oracledb":"git://github.com/juancancela/node-oracledb"
   },
   "waterlineAdapter": {
     "type": "oracle",
