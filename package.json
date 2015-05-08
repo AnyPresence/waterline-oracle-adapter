@@ -20,9 +20,7 @@
   "license": "AP License",
   "readmeFilename": "README.md",
   "dependencies": {
-    "squel": "3.10.0"
-  },
-  "devDependencies": {
+    "squel": "3.10.0",
     "waterline-adapter-tests": "~0.10.0",
     "mocha": "*",
     "captains-log": "0.11.0",
