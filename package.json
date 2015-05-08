@@ -20,8 +20,7 @@
   "license": "AP License",
   "readmeFilename": "README.md",
   "dependencies": {
-    "strong-oracle": "git://github.com/juancarloscancela/strong-oracle",
-    "squel":"3.10.0"
+    "squel": "3.10.0"
   },
   "devDependencies": {
     "waterline-adapter-tests": "~0.10.0",
@@ -29,7 +28,7 @@
     "captains-log": "0.11.0",
     "async": "0.9.0",
     "es6-promise": "2.0.1",
-    "oracledb":"git://github.com/juancancela/node-oracledb"
+    "oracledb":"AnyPresence/node-oracledb#1.0.1"
   },
   "waterlineAdapter": {
     "type": "oracle",
