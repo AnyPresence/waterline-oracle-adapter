@@ -1,8 +1,8 @@
-![image_squidhome@2x.png](http://i.imgur.com/RIvu9.png)
+![image_squidhome@2x.png](http://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Oracle_logo.svg/2000px-Oracle_logo.svg.png)
 
 # waterline-oracle
 
-Provides easy access to `oracle` from Sails.js & Waterline.
+Provides easy access to `oracle databases` from Sails.js & Waterline.
 
 This module is a Waterline/Sails adapter, an early implementation of a rapidly-developing, tool-agnostic data standard.  Its goal is to provide a set of declarative interfaces, conventions, and best-practices for integrating with all sorts of data sources.  Not just databases-- external APIs, proprietary web services, or even hardware.
 
@@ -27,22 +27,22 @@ This adapter exposes the following methods:
 ###### `find()`
 
 + **Status**
-  + Planned
+  + Implemented
 
 ###### `create()`
 
 + **Status**
-  + Planned
+  + Implemented
 
 ###### `update()`
 
 + **Status**
-  + Planned
+  + Implemented
 
 ###### `destroy()`
 
 + **Status**
-  + Planned
+  + Implemented
 
 
 
