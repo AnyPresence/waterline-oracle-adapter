@@ -1,6 +1,6 @@
 {
   "name": "waterline-oracle",
-  "version": "0.11.3",
+  "version": "0.11.4",
   "description": "Oracle DB adapter for Sails / Waterline AnyPresence",
   "main": "lib/adapter.js",
   "scripts": {
